@@ -1,5 +1,5 @@
 export class Patron {
-    indice: number = 0;
+    indice = 0;
     valores: any[] = [];
 
     constructor(indice: number, valores: any[]) {

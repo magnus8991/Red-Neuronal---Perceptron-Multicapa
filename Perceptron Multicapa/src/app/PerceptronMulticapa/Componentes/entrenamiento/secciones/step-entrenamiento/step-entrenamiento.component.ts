@@ -1,19 +1,20 @@
-import { AfterViewInit, Component, OnInit, Output, ViewChild, EventEmitter } from "@angular/core";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
-import { ToastrService } from "ngx-toastr";
-import { Fila } from "src/app/PerceptronMulticapa/Modelos/fila";
-import { Grafica } from "src/app/PerceptronMulticapa/Modelos/grafica";
-import { MatrizPesosSinapticos } from "src/app/PerceptronMulticapa/Modelos/matrizPesosSinapticos";
-import { ParametrosEntrada } from "src/app/PerceptronMulticapa/Modelos/parametrosEntrada";
-import { TablaErroresRMS } from "src/app/PerceptronMulticapa/Modelos/tablaErroresRms";
-import { Umbrales } from "src/app/PerceptronMulticapa/Modelos/umbrales";
-import { EntrenamientoService } from "src/app/PerceptronMulticapa/Servicios/entrenamiento.service";
-import { ParametrosEntrenamientoService } from "src/app/PerceptronMulticapa/Servicios/parametrosEntrenamiento.service";
+import { AfterViewInit, Component, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
+import { Fila } from 'src/app/PerceptronMulticapa/Modelos/fila';
+import { Grafica } from 'src/app/PerceptronMulticapa/Modelos/grafica';
+import { MatrizPesosSinapticos } from 'src/app/PerceptronMulticapa/Modelos/matrizPesosSinapticos';
+import { ParametrosEntrada } from 'src/app/PerceptronMulticapa/Modelos/parametrosEntrada';
+import { TablaErroresRMS } from 'src/app/PerceptronMulticapa/Modelos/tablaErroresRms';
+import { Umbrales } from 'src/app/PerceptronMulticapa/Modelos/umbrales';
+import { EntrenamientoService } from 'src/app/PerceptronMulticapa/Servicios/entrenamiento.service';
+import { ParametrosEntrenamientoService } from 'src/app/PerceptronMulticapa/Servicios/parametrosEntrenamiento.service';
 
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'step-entrenamiento',
   templateUrl: './step-entrenamiento.component.html',
   styleUrls: ['./step-entrenamiento.component.css']
@@ -32,7 +33,7 @@ export class StepEntrenamientoComponent implements OnInit, AfterViewInit {
   @ViewChild('sortUmbralesOptimos') sortUmbralesOptimos: MatSort;
   @ViewChild('paginatorErrores') paginatorErrores: MatPaginator;
   @ViewChild('sortErrores') sortErrores: MatSort;
-  redEntrenada: boolean = false;
+  redEntrenada = false;
   graficaErrores: Grafica;
   graficaSalidas: Grafica;
   erroresRMS: number[] = [];
@@ -51,7 +52,7 @@ export class StepEntrenamientoComponent implements OnInit, AfterViewInit {
   constructor(private parametrosEntrenamientoService: ParametrosEntrenamientoService,
     private entrenamientoService: EntrenamientoService,
     private toastr: ToastrService) {
-    for (let i = 0; i < 5; i++) this.tablaErroresRMS.push(new TablaErroresRMS(i + 1, 'N/A'));
+    for (let i = 0; i < 5; i++) { this.tablaErroresRMS.push(new TablaErroresRMS(i + 1, 'N/A')); }
   }
 
   ngAfterViewInit() {
@@ -76,7 +77,7 @@ export class StepEntrenamientoComponent implements OnInit, AfterViewInit {
     this.mostrarContenidoErrores();
   }
 
-  //Visualizacion del contenido
+  // Visualizacion del contenido
 
   mostrarContenidoPesosOptimos() {
     this.displayedColumnsPesosOptimos = this.pesosOptimos.encabezados;
@@ -98,7 +99,7 @@ export class StepEntrenamientoComponent implements OnInit, AfterViewInit {
     this.dataSourceErrores.sort = this.sortErrores;
   }
 
-  //Operaciones de reinicio de valores
+  // Operaciones de reinicio de valores
 
   reiniciarEntrenamiento() {
     this.reloadEntrenamiento.emit();
@@ -124,19 +125,24 @@ export class StepEntrenamientoComponent implements OnInit, AfterViewInit {
 
   reiniciarMatrizDeErrores() {
     this.tablaErroresRMS = [];
-    for (let i = 0; i < 5; i++) this.tablaErroresRMS.push(new TablaErroresRMS(i + 1, 'N/A'));
+    for (let i = 0; i < 5; i++) { this.tablaErroresRMS.push(new TablaErroresRMS(i + 1, 'N/A')); }
     this.mostrarContenidoErrores();
   }
 
-  //Operaciones de entrenamiento de la red neuronal
+  // Operaciones de entrenamiento de la red neuronal
 
   entrenar(ConfigYParamsTraining, parametrosEntrada: ParametrosEntrada) {
     let indiceIteraciones = 1;
-    let rataDinamica = 0;
+    const rataDinamica = 0;
     this.inicializarValores();
     while (indiceIteraciones <= ConfigYParamsTraining.numeroIteraciones) {
-      let erroresPatrones = this.calcularErroresVariosYSalidasRed(parametrosEntrada, rataDinamica, ConfigYParamsTraining, indiceIteraciones);
-      let errorRMS = this.entrenamientoService.errorRMS(erroresPatrones);
+      const erroresPatrones = this.calcularErroresVariosYSalidasRed(
+        parametrosEntrada,
+        rataDinamica,
+        ConfigYParamsTraining,
+        indiceIteraciones
+      );
+      const errorRMS = this.entrenamientoService.errorRMS(erroresPatrones);
       this.tablaErroresRMS.push(new TablaErroresRMS(indiceIteraciones, errorRMS));
       this.actualizarGraficaErrores(indiceIteraciones, errorRMS, ConfigYParamsTraining.errorMaximoPermitido);
       this.actualizarGraficaSalidas(parametrosEntrada.numeroSalidas, parametrosEntrada.numeroPatrones);
@@ -162,20 +168,20 @@ export class StepEntrenamientoComponent implements OnInit, AfterViewInit {
     indiceIteraciones: number) {
     rataDinamica = 1 / indiceIteraciones;
     this.salidasRed = this.entrenamientoService.getInitSalidasRed(parametrosEntrada.numeroSalidas);
-    let erroresPatrones: number[] = [];
+    const erroresPatrones: number[] = [];
     let indicePatron = 0;
     parametrosEntrada.patrones.forEach(patron => {
-      let erroresYSalidaRed = this.entrenamientoService.calcularErroresLineales(parametrosEntrada, this.pesosOptimos,
+      const erroresYSalidaRed = this.entrenamientoService.calcularErroresLineales(parametrosEntrada, this.pesosOptimos,
         this.umbrales, patron);
-      let erroresLineales = erroresYSalidaRed.erroresLineales;
-      for (let i = 0; i < parametrosEntrada.numeroSalidas; i++) this.salidasRed[i].push(erroresYSalidaRed.salidas[i]);
-      let errorPatron = this.entrenamientoService.errorPatron(erroresLineales, parametrosEntrada.numeroSalidas);
+      const erroresLineales = erroresYSalidaRed.erroresLineales;
+      for (let i = 0; i < parametrosEntrada.numeroSalidas; i++) { this.salidasRed[i].push(erroresYSalidaRed.salidas[i]); }
+      const errorPatron = this.entrenamientoService.errorPatron(erroresLineales, parametrosEntrada.numeroSalidas);
       erroresPatrones.push(errorPatron);
-      let pesosYUmbrales = {
+      const pesosYUmbrales = {
         pesosOptimos: this.pesosOptimos, pesosAnteriores: this.pesosAnteriores, umbrales: this.umbrales,
         umbralesAnteriores: this.umbralesAnteriores
       };
-      let pesosYUmbralesOptimos = this.entrenamientoService.obtenerPesosYUmbralesNuevos(parametrosEntrada, pesosYUmbrales,
+      const pesosYUmbralesOptimos = this.entrenamientoService.obtenerPesosYUmbralesNuevos(parametrosEntrada, pesosYUmbrales,
         ConfigYParamsTraining.rataAprendizaje, rataDinamica, erroresLineales, patron.valores, ConfigYParamsTraining.checkDelta);
       this.pesosAnteriores = pesosYUmbralesOptimos.pesosAnteriores;
       this.umbralesAnteriores = pesosYUmbralesOptimos.umbralesAnteriores;
@@ -192,7 +198,7 @@ export class StepEntrenamientoComponent implements OnInit, AfterViewInit {
     this.pesosAnteriores = this.pesosOptimos;
     this.umbralesAnteriores = this.umbrales;
     this.pesosAnteriores.filas.forEach(fila => {
-      for (let i = 0; i < fila.columnas.length; i++) fila.columnas[i] = 0;
+      for (let i = 0; i < fila.columnas.length; i++) { fila.columnas[i] = 0; }
     });
     this.umbralesAnteriores.valores.forEach(valor => {
       valor = 0;
@@ -223,7 +229,7 @@ export class StepEntrenamientoComponent implements OnInit, AfterViewInit {
     this.parametrosEntrenamientoService.deletePesosOptimosYUmbrales();
   }
 
-  //Operaciones de las graficas
+  // Operaciones de las graficas
 
   reiniciarGraficas() {
     this.erroresRMS = [];
@@ -242,7 +248,7 @@ export class StepEntrenamientoComponent implements OnInit, AfterViewInit {
   }
 
   actualizarGraficaSalidasDeseadas() {
-    let data = this.parametrosEntrenamientoService.getParametrosEntrada();
+    const data = this.parametrosEntrenamientoService.getParametrosEntrada();
     if (data) {
       this.salidasDeseadas = this.entrenamientoService.getSalidasDeseadas(data.patrones, data.numeroEntradas, data.numeroSalidas);
       this.salidasRed = this.entrenamientoService.getInitSalidasRed(data.numeroSalidas);
@@ -251,7 +257,7 @@ export class StepEntrenamientoComponent implements OnInit, AfterViewInit {
   }
 
   actualizarGraficaSalidas(numeroSalidas: number, numeroPatrones: number) {
-    let salidasTotales: any[] = [];
+    const salidasTotales: any[] = [];
     this.salidasDeseadas.forEach(salidaDeseada => {
       salidasTotales.push(salidaDeseada);
     });
@@ -262,7 +268,7 @@ export class StepEntrenamientoComponent implements OnInit, AfterViewInit {
   }
 
   obtenerNombresSeries(numeroSalidas: number): string[] {
-    let series: string[] = [];
+    const series: string[] = [];
     for (let i = 0; i < numeroSalidas; i++) {
       series.push('YD' + (i + 1).toString());
     }

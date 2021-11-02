@@ -1,5 +1,3 @@
-import { Fila } from "./fila";
-
 export class TablaErroresRMS {
     indice: number;
     error: any;

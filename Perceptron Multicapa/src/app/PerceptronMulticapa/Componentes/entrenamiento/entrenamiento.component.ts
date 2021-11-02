@@ -23,7 +23,7 @@ export class EntrenamientoComponent implements OnInit {
 
   ngOnInit() { }
 
-  //Operaciones de eventos (comunicación entre componentes)
+  // Operaciones de eventos (comunicación entre componentes)
 
   reiniciarParametrosYConfiguracion() {
     this.reiniciarEntrenamiento();
@@ -36,33 +36,29 @@ export class EntrenamientoComponent implements OnInit {
   }
 
   entrenar() {
-    let ConfigYParamsTraining = {
+    const ConfigYParamsTraining = {
       checkDelta: this.childStepEntradas.checkDelta,
       checkDeltaModificada: this.childStepEntradas.checkDeltaModificada,
       numeroIteraciones: this.childStepEntradas.numeroIteraciones.value,
       rataAprendizaje: this.childStepEntradas.rataAprendizaje.value,
       errorMaximoPermitido: this.childStepEntradas.errorMaximoPermitido.value,
-    }
+    };
     if (!this.isValidConfigYParametros(ConfigYParamsTraining, this.childStepEntradas.parametrosEntrada,
-      this.childStepPesos.pesosSinapticos, this.childStepPesos.umbrales)) return;
+      this.childStepPesos.pesosSinapticos, this.childStepPesos.umbrales)) { return; }
     this.childStepEntrenamiento.entrenar(ConfigYParamsTraining, this.childStepEntradas.parametrosEntrada);
   }
 
   guardarPesosYUmbrales() {
-    let tipoDato = this.childStepEntradas.parametrosEntrada.tipoDato;
+    const tipoDato = this.childStepEntradas.parametrosEntrada.tipoDato;
     this.childStepEntrenamiento.guardarPesosYUmbrales(tipoDato);
-  }
-
-  actualizarParametrosEntrada() {
     this.childStepPesos.parametrosEntrada = this.childStepEntradas.parametrosEntrada;
-    this.childStepEntrenamiento.actualizarGraficaSalidasDeseadas();
   }
 
   reiniciarStepPesos() {
     this.childStepPesos.reiniciarStepPesos();
   }
 
-  //Operaciones de reinicio de valores (comunicación entre componentes)
+  // Operaciones de reinicio de valores (comunicación entre componentes)
 
   reiniciarStepEntradas() {
     this.childStepEntradas.reiniciarStepEntradas();
@@ -72,17 +68,18 @@ export class EntrenamientoComponent implements OnInit {
     this.childStepEntrenamiento.reiniciarStepEntrenamiento();
   }
 
-  //Pre-validacion del entrenamiento
+  // Pre-validacion del entrenamiento
 
-  isValidConfigYParametros(ConfigYParamsTraining, parametrosEntrada: ParametrosEntrada, pesosSinapticos: MatrizPesosSinapticos,
+  isValidConfigYParametros(configYParamsTraining, parametrosEntrada: ParametrosEntrada, pesosSinapticos: MatrizPesosSinapticos,
     umbrales: Umbrales): boolean {
-    if (!this.validaciones.checkConfiguracionRed(parametrosEntrada, pesosSinapticos, umbrales, ConfigYParamsTraining.checkDelta,
-      ConfigYParamsTraining.checkDeltaModificada, ConfigYParamsTraining.numeroIteraciones, ConfigYParamsTraining.rataAprendizaje, ConfigYParamsTraining.errorMaximoPermitido)) {
+    if (!this.validaciones.checkConfiguracionRed(parametrosEntrada, pesosSinapticos, umbrales, configYParamsTraining.checkDelta,
+      // tslint:disable-next-line:max-line-length
+      configYParamsTraining.checkDeltaModificada, configYParamsTraining.numeroIteraciones, configYParamsTraining.rataAprendizaje, configYParamsTraining.errorMaximoPermitido)) {
       this.toastr.warning(!this.validaciones.checkParametrosEntrada(parametrosEntrada) ?
         'Verifique el cargue y la configuración de los parámetros de entrada' :
-        !this.validaciones.checkAlgoritmTraining(ConfigYParamsTraining.checkDelta, ConfigYParamsTraining.checkDeltaModificada) ?
+        !this.validaciones.checkAlgoritmTraining(configYParamsTraining.checkDelta, configYParamsTraining.checkDeltaModificada) ?
           'Verifique la configuración del algoritmo de entrenamiento' : !this.validaciones.checkParametrosEntrenamiento(
-            ConfigYParamsTraining.numeroIteraciones, ConfigYParamsTraining.rataAprendizaje, ConfigYParamsTraining.errorMaximoPermitido) ?
+            configYParamsTraining.numeroIteraciones, configYParamsTraining.rataAprendizaje, configYParamsTraining.errorMaximoPermitido) ?
             'Verifique la configuración de los parámetros de entrenamiento' : 'Verifique la configuración de los pesos sinápticos y umbrales', '¡Advertencia!');
       return false;
     }

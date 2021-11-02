@@ -82,8 +82,7 @@ export class SimulacionService {
   validarEntradas(entradas: any[]) {
     let errores = 0;
     entradas.forEach(entrada => {
-      errores += (entrada == undefined || entrada == null || entrada.toString().replace(' ') == ''
-        || entrada < 0 || entrada > 1) ? 1 : 0;
+      errores += (entrada == undefined || false || entrada.toString().replace(' ') == '' || entrada < 0 || entrada > 1) ? 1 : 0;
     });
     return errores;
   }

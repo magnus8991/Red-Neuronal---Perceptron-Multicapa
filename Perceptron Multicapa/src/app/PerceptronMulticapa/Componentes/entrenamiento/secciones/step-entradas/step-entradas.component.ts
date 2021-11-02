@@ -10,6 +10,7 @@ import { GetterEntradasService } from 'src/app/PerceptronMulticapa/Servicios/get
 import { Patron } from 'src/app/PerceptronMulticapa/Modelos/patron';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'step-entradas',
   templateUrl: './step-entradas.component.html',
   styleUrls: ['./step-entradas.component.css']
@@ -18,12 +19,12 @@ export class StepEntradasComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<Patron>;
   formParametrosEntrada: FormGroup;
   formParametrosEntrenamiento: FormGroup;
-  checkDelta: boolean = false;
-  checkDeltaModificada: boolean = false;
+  checkDelta = false;
+  checkDeltaModificada = false;
   displayedColumns: string[];
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild('sort') sort: MatSort;
-  redEntrenada: boolean = false;
+  redEntrenada = false;
   parametrosEntrada: ParametrosEntrada;
   @Output() reloadStepPesos = new EventEmitter<unknown>();
   @Output() updateParametrosEntrada = new EventEmitter<ParametrosEntrada>();
@@ -41,7 +42,7 @@ export class StepEntradasComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    let data = this.parametrosEntrenamientoService.getParametrosEntrada();
+    const data = this.parametrosEntrenamientoService.getParametrosEntrada();
     this.parametrosEntrada = data ? data : new ParametrosEntrada();
     this.formParametrosEntrada = this.builder.group({
       numeroEntradas: [0, Validators.required],
@@ -56,14 +57,14 @@ export class StepEntradasComponent implements OnInit, AfterViewInit {
     this.mostrarContenidoEntradas();
   }
 
-  //Cargue del archivo de los parametros de entrada
+  // Cargue del archivo de los parametros de entrada
 
   crearArchivo(event) {
     if (event.target.files.length > 0) {
-      var inputFile = <HTMLInputElement>document.getElementById('file-0');
-      var fileName = <HTMLSpanElement>document.getElementById('iborrainputfile');
+      const inputFile = <HTMLInputElement>document.getElementById('file-0');
+      const fileName = <HTMLSpanElement>document.getElementById('iborrainputfile');
       if (!inputFile.files[0].name.includes('.txt')) {
-        this.toastr.warning("Debe subir un archivo de texto plano (.txt)", '¡Advertencia!');
+        this.toastr.warning('Debe subir un archivo de texto plano (.txt)', '¡Advertencia!');
         inputFile.value = '';
         fileName.innerHTML = 'Cargar Archivo';
         return;
@@ -75,7 +76,7 @@ export class StepEntradasComponent implements OnInit, AfterViewInit {
   }
 
   convertirATexto(inputFile) {
-    var reader = new FileReader;
+    const reader = new FileReader;
     reader.onloadend = () => {
       this.parametrosEntrada = this.getterEntradas.getParametrosEntrada(reader.result);
       if (this.parametrosEntrada.tipoDato == null) {
@@ -91,7 +92,7 @@ export class StepEntradasComponent implements OnInit, AfterViewInit {
     reader.readAsText(inputFile, 'ISO-8859-1');
   }
 
-  //Visualizacion del contenido de los parametros de entrada y de los pesos sinapticos
+  // Visualizacion del contenido de los parametros de entrada y de los pesos sinapticos
 
   mostrarContenidoEntradas() {
     this.displayedColumns = this.parametrosEntrada.encabezados;
@@ -103,19 +104,19 @@ export class StepEntradasComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  //Operaciones de los slide toggles de la funcion de activacion
+  // Operaciones de los slide toggles de la funcion de activacion
 
   toggleDelta(event) {
-    if (event) this.checkDeltaModificada = false;
+    if (event) { this.checkDeltaModificada = false; }
     this.actualizarParametrosEntrada();
   }
 
   toggleDeltaModificada(event) {
-    if (event) this.checkDelta = false;
+    if (event) { this.checkDelta = false; }
     this.actualizarParametrosEntrada();
   }
 
-  //Operaciones de reinicio de valores
+  // Operaciones de reinicio de valores
 
   reiniciarStepEntradas() {
     this.parametrosEntrada = new ParametrosEntrada();
@@ -126,14 +127,14 @@ export class StepEntradasComponent implements OnInit, AfterViewInit {
     this.numeroIteraciones.setValue(1);
     this.rataAprendizaje.setValue(0.1);
     this.errorMaximoPermitido.setValue(0.1);
-    var inputFile = <HTMLInputElement>document.getElementById('file-0');
-    var fileName = <HTMLSpanElement>document.getElementById('iborrainputfile');
+    const inputFile = <HTMLInputElement>document.getElementById('file-0');
+    const fileName = <HTMLSpanElement>document.getElementById('iborrainputfile');
     inputFile.value = '';
     fileName.innerHTML = 'Cargar Archivo';
     this.actualizarParametrosEntrada();
   }
 
-  //Eventos de reinicio y actualizacion de valores
+  // Eventos de reinicio y actualizacion de valores
 
   reiniciarStepPesos() {
     this.reloadStepPesos.emit();
@@ -151,12 +152,12 @@ export class StepEntradasComponent implements OnInit, AfterViewInit {
     this.reloadTraining.emit();
   }
 
-  //Obtencion de los controles del formulario
+  // Obtencion de los controles del formulario
 
-  get numeroEntradas() { return this.formParametrosEntrada.get('numeroEntradas') }
+  get numeroEntradas() { return this.formParametrosEntrada.get('numeroEntradas'); }
   get numeroSalidas() { return this.formParametrosEntrada.get('numeroSalidas'); }
   get numeroPatrones() { return this.formParametrosEntrada.get('numeroPatrones'); }
-  get numeroIteraciones() { return this.formParametrosEntrenamiento.get('numeroIteraciones') }
+  get numeroIteraciones() { return this.formParametrosEntrenamiento.get('numeroIteraciones'); }
   get rataAprendizaje() { return this.formParametrosEntrenamiento.get('rataAprendizaje'); }
   get errorMaximoPermitido() { return this.formParametrosEntrenamiento.get('errorMaximoPermitido'); }
 }

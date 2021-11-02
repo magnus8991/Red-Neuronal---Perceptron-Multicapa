@@ -28,20 +28,20 @@ export class SimulacionComponent implements OnInit, AfterViewInit {
   @ViewChild('sortPesosOptimos') sortPesosOptimos: MatSort;
   @ViewChild('paginatorUmbralesOptimos') paginatorUmbralesOptimos: MatPaginator;
   @ViewChild('sortUmbralesOptimos') sortUmbralesOptimos: MatSort;
-  disabledFile: boolean = true;
-  checkFile: boolean = false;
-  checkPesosAnteriores: boolean = false;
-  labelAnterior: string = 'Sin cargar';
-  spinnerAnteriorValue: number = 0;
-  spinnerAnteriorMode: string = 'determinate';
-  errorCheckAnterior: boolean = false;
-  errorCheckFile: boolean = false;
-  numeroEntradas: number = 0;
-  numeroSalidas: number = 0;
-  tipoDato: string = '';
+  disabledFile = true;
+  checkFile = false;
+  checkPesosAnteriores = false;
+  labelAnterior = 'Sin cargar';
+  spinnerAnteriorValue = 0;
+  spinnerAnteriorMode = 'determinate';
+  errorCheckAnterior = false;
+  errorCheckFile = false;
+  numeroEntradas = 0;
+  numeroSalidas = 0;
+  tipoDato = '';
   umbrales: Umbrales;
-  checkBinario: boolean = false;
-  checkBipolar: boolean = false;
+  checkBinario = false;
+  checkBipolar = false;
 
   constructor(private toastr: ToastrService,
     private simulacionService: SimulacionService,
@@ -62,15 +62,16 @@ export class SimulacionComponent implements OnInit, AfterViewInit {
     this.mostrarContenidoUmbralesOptimos();
   }
 
-  //Cargue del archivo de los pesos óptimos de entrada
+  // Cargue del archivo de los pesos óptimos de entrada
 
-  crearArchivo(event, tipoArchivo) {
+  crearArchivo(event, tipoArchivo: string) {
     if (event.target.files.length > 0) {
-      var inputFile = <HTMLInputElement>document.getElementById(tipoArchivo == 'pesos' ? 'file-1' : 'file-2');
-      var fileName = <HTMLSpanElement>document.getElementById(tipoArchivo == 'pesos' ? 'iborrainputfile1' : 'iborrainputfile2');
+      const inputFile = <HTMLInputElement>document.getElementById(tipoArchivo === 'pesos' ? 'file-1' : 'file-2');
+      const fileName = <HTMLSpanElement>document.getElementById(tipoArchivo === 'pesos' ? 'iborrainputfile1' : 'iborrainputfile2');
       if (!inputFile.files[0].name.includes('.txt')) {
-        this.toastr.warning("Debe subir un archivo de texto plano (.txt)", '¡Advertencia!');
+        this.toastr.warning('Debe subir un archivo de texto plano (.txt)', '¡Advertencia!');
         inputFile.value = '';
+        // tslint:disable-next-line:triple-equals
         fileName.innerHTML = tipoArchivo == 'pesos' ? 'Cargar Pesos' : 'Cargar Umbrales';
         return;
       }
@@ -81,9 +82,9 @@ export class SimulacionComponent implements OnInit, AfterViewInit {
   }
 
   convertirATexto(inputFile, fileHtml: HTMLInputElement, fileName: HTMLSpanElement, tipoArchivo: string) {
-    var reader = new FileReader;
+    const reader = new FileReader;
     reader.onloadend = () => {
-      if (tipoArchivo == 'pesos') {
+      if (tipoArchivo === 'pesos') {
         this.pesosOptimos = this.simulacionService.getPesosOptimosFile(reader.result);
         if (!this.validaciones.checkPesos(this.pesosOptimos)) {
           fileHtml.value = '';
@@ -104,7 +105,7 @@ export class SimulacionComponent implements OnInit, AfterViewInit {
     reader.readAsText(inputFile, 'ISO-8859-1');
   }
 
-  //Creción de valores de entrada y salida
+  // Creción de valores de entrada y salida
 
   crearEntradasYSalidas() {
     this.numeroEntradas = this.pesosOptimos.filas.length;
@@ -113,7 +114,7 @@ export class SimulacionComponent implements OnInit, AfterViewInit {
     this.salidasRed = this.simulacionService.getListValores(this.numeroSalidas);
   }
 
-  //Visualizacion del contenido de los parametros de entrada y de los pesos sinapticos
+  // Visualizacion del contenido de los parametros de entrada y de los pesos sinapticos
 
   mostrarContenidoPesosOptimos() {
     this.displayedColumnsPesosOptimos = this.pesosOptimos.encabezados;
@@ -129,52 +130,52 @@ export class SimulacionComponent implements OnInit, AfterViewInit {
     this.dataSourceUmbralesOptimos.sort = this.sortPesosOptimos;
   }
 
-  //Operaciones de los slide toggles de la funcion de activacion
+  // Operaciones de los slide toggles de la funcion de activacion
 
   toggleBinario(event) {
-    if (event) this.checkBipolar = false;
+    if (event) { this.checkBipolar = false; }
     this.tipoDato = 'binario';
   }
 
   toggleBipolar(event) {
-    if (event) this.checkBinario = false;
+    if (event) { this.checkBinario = false; }
     this.tipoDato = 'bipolar';
   }
 
-  //Operaciones de los slide toggles de los pesos sinapticos
+  // Operaciones de los slide toggles de los pesos sinapticos
 
   toggleArchivos(event) {
-    if (this.errorCheckFile) event.source.checked = true;
+    if (this.errorCheckFile) { event.source.checked = true; }
     switch (event.source.checked) {
       case true:
         this.cargueArchivoListo();
         break;
       case false:
-        if (!this.errorCheckFile) this.reiniciarPesosYUmbrales();
+        if (!this.errorCheckFile) { this.reiniciarPesosYUmbrales(); }
         this.deshabilitarCargueArchivos();
         break;
     }
   }
 
   toggleEntrenamientoAnterior(event) {
-    if (this.errorCheckAnterior) event.source.checked = true;
+    if (this.errorCheckAnterior) { event.source.checked = true; }
     switch (event.source.checked) {
       case true:
         this.spinnerAnteriorMode = 'indeterminate';
-        if (!this.isValidToggleEntrenamientoAnterior(event)) return;
+        if (!this.isValidToggleEntrenamientoAnterior(event)) { return; }
         this.entrenamientoAnteriorListo();
         break;
       case false:
-        if (!this.errorCheckAnterior) this.reiniciarPesosYUmbrales();
+        if (!this.errorCheckAnterior) { this.reiniciarPesosYUmbrales(); }
         this.deshabilitarPesoAnterior();
         break;
     }
   }
 
-  //Validación de toggle anterior
+  // Validación de toggle anterior
 
   isValidToggleEntrenamientoAnterior(event): boolean {
-    let data = this.parametrosEntrenamientoService.getPesosYUmbralesOptimos();
+    const data = this.parametrosEntrenamientoService.getPesosYUmbralesOptimos();
     this.pesosOptimos = data ? data.pesosOptimos : new MatrizPesosSinapticos();
     this.umbrales = data ? data.umbrales : new Umbrales();
     this.obtenerTipoDato();
@@ -185,7 +186,7 @@ export class SimulacionComponent implements OnInit, AfterViewInit {
     return true;
   }
 
-  //Visualización de mensajes toggle
+  // Visualización de mensajes toggle
 
   messageToggle(event, check: string, type: string, message: string) {
     event.source.checked = false;
@@ -199,11 +200,10 @@ export class SimulacionComponent implements OnInit, AfterViewInit {
         this.errorCheckFile = true;
         break;
     }
-    if (type == 'error') this.toastr.error(message, '¡Oh no!');
-    else if (type == 'warning') this.toastr.warning(message, '¡Advertencia!');
+    if (type === 'error') { this.toastr.error(message, '¡Oh no!'); } else if (type === 'warning') { this.toastr.warning(message, '¡Advertencia!'); }
   }
 
-  //Operaciones de reinicio de valores
+  // Operaciones de reinicio de valores
 
   reiniciarPesosYUmbrales() {
     this.pesosOptimos = new MatrizPesosSinapticos();
@@ -218,7 +218,7 @@ export class SimulacionComponent implements OnInit, AfterViewInit {
     this.deshabilitarCargueArchivos();
     this.deshabilitarPesoAnterior();
     this.reiniciarPesosYUmbrales();
-    this.reiniciarEntradasYSalidas()
+    this.reiniciarEntradasYSalidas();
   }
 
   reiniciarEntradasYSalidas() {
@@ -228,15 +228,15 @@ export class SimulacionComponent implements OnInit, AfterViewInit {
     this.numeroSalidas = 0;
   }
 
-  //Operaciones de habilitacion y deshabilitacion de los toggles de los pesos sinapticos
+  // Operaciones de habilitacion y deshabilitacion de los toggles de los pesos sinapticos
 
   deshabilitarCargueArchivos() {
-    var inputFile1 = <HTMLInputElement>document.getElementById('file-1');
-    var fileName1 = <HTMLSpanElement>document.getElementById('iborrainputfile1');
+    const inputFile1 = <HTMLInputElement>document.getElementById('file-1');
+    const fileName1 = <HTMLSpanElement>document.getElementById('iborrainputfile1');
     inputFile1.value = '';
     fileName1.innerHTML = 'Cargar Pesos';
-    var inputFile2 = <HTMLInputElement>document.getElementById('file-2');
-    var fileName2 = <HTMLSpanElement>document.getElementById('iborrainputfile2');
+    const inputFile2 = <HTMLInputElement>document.getElementById('file-2');
+    const fileName2 = <HTMLSpanElement>document.getElementById('iborrainputfile2');
     inputFile2.value = '';
     fileName2.innerHTML = 'Cargar Umbrales';
     this.disabledFile = true;
@@ -278,7 +278,7 @@ export class SimulacionComponent implements OnInit, AfterViewInit {
       this.toastr.warning('Verifique el cargue de pesos y umbrales');
       return;
     }
-    if (this.entradas.length == 0) {
+    if (this.entradas.length === 0) {
       this.toastr.warning('Verifique los valores de las entradas');
       return;
     }
@@ -286,11 +286,17 @@ export class SimulacionComponent implements OnInit, AfterViewInit {
       this.toastr.warning('Verifique la configuración del tipo de dato');
       return;
     }
-    let salidasRed = this.simulacionService.simular(this.entradas, this.salidasRed.length, this.pesosOptimos, this.umbrales, this.tipoDato);
+    const salidasRed = this.simulacionService.simular(
+      this.entradas,
+      this.salidasRed.length,
+      this.pesosOptimos,
+      this.umbrales,
+      this.tipoDato
+    );
     this.salidasRed = salidasRed ? salidasRed : this.salidasRed;
   }
 
-  //Obtencion de configuracion
+  // Obtencion de configuracion
 
   obtenerTipoDato() {
     switch (this.parametrosEntrenamientoService.getTipoDato()) {

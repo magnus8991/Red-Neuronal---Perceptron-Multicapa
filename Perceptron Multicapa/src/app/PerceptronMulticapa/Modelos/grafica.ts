@@ -1,10 +1,10 @@
-import * as ApexCharts from "apexcharts";
+import * as ApexCharts from 'apexcharts';
 
 export class Grafica {
     chart: ApexCharts;
 
     constructor(grafica: HTMLElement, title: string, nombreSeries: any[], datos: any[], categories: any[]) {
-        let options = {
+        const options = {
             series: this.getSeries(nombreSeries, datos),
             chart: {
                 height: 350,
@@ -38,9 +38,9 @@ export class Grafica {
     }
 
     getSeries(nombreSeries: string[], datos: any[]): any[] {
-        let series = [];
+        const series = [];
         for (let i = 0; i < nombreSeries.length; i++) {
-            let serie = {
+            const serie = {
                 name: nombreSeries[i],
                 data: datos[i]
             };
@@ -54,17 +54,17 @@ export class Grafica {
     }
 
     actualizarDatosYCategorias(nombreSeries: any[], datos: any[], categorias: number) {
-        let options = {
+        const options = {
             series: this.getSeries(nombreSeries, datos),
             xaxis: {
                 categories: this.getCategorias(categorias),
             }
         };
-        this.chart.updateOptions(options);
+        this.chart?.updateOptions(options);
     }
 
     getCategorias(categorias: number): any[] {
-        let listaCategorias = [];
+        const listaCategorias = [];
         for (let i = 0; i < categorias; i++) {
             listaCategorias.push(i + 1);
         }

@@ -1,9 +1,8 @@
-import { Injectable } from "@angular/core";
-import { AbstractControl } from "@angular/forms";
-import { MatrizPesosSinapticos } from "../Modelos/matrizPesosSinapticos";
-import { ParametrosEntrada } from "../Modelos/parametrosEntrada";
-import { Patron } from "../Modelos/patron";
-import { Umbrales } from "../Modelos/umbrales";
+import { Injectable } from '@angular/core';
+import { MatrizPesosSinapticos } from '../Modelos/matrizPesosSinapticos';
+import { ParametrosEntrada } from '../Modelos/parametrosEntrada';
+import { Patron } from '../Modelos/patron';
+import { Umbrales } from '../Modelos/umbrales';
 
 @Injectable({
   providedIn: 'root'
@@ -14,39 +13,38 @@ export class EntrenamientoService {
 
   obtenerPesosYUmbralesNuevos(parametrosEntrada: ParametrosEntrada, pesosYUmbrales, rataAprendizaje: number, rataDinamica: number,
     erroresLineales: number[], entradas: number[], checkDelta: boolean): any {
-    let umbralAnterior = 0;
     for (let i = 0; i < parametrosEntrada.numeroSalidas; i++) {
       let indiceEntradas = 0;
       pesosYUmbrales.pesosOptimos.filas.forEach(fila => {
-        let pesoNuevo = fila.columnas[i] + (rataAprendizaje * erroresLineales[i] * entradas[indiceEntradas]) + (checkDelta ? 0 :
+        const pesoNuevo = fila.columnas[i] + (rataAprendizaje * erroresLineales[i] * entradas[indiceEntradas]) + (checkDelta ? 0 :
           rataDinamica * (fila.columnas[i] - pesosYUmbrales.pesosAnteriores.filas[indiceEntradas].columnas[i]));
         pesosYUmbrales.pesosAnteriores.filas[indiceEntradas].columnas[i] = fila.columnas[i];
         fila.columnas[i] = pesoNuevo;
         indiceEntradas += 1;
-      })
-      let umbralNuevo = pesosYUmbrales.umbrales.valores[i] + (rataAprendizaje * erroresLineales[i] * entradas[0]) + (checkDelta ? 0 :
+      });
+      const umbralNuevo = pesosYUmbrales.umbrales.valores[i] + (rataAprendizaje * erroresLineales[i] * entradas[0]) + (checkDelta ? 0 :
         rataDinamica * (pesosYUmbrales.umbrales.valores[i] - pesosYUmbrales.umbralesAnteriores.valores[i]));
       pesosYUmbrales.umbralesAnteriores.valores[i] = pesosYUmbrales.umbrales.valores[i];
       pesosYUmbrales.umbrales.valores[i] = umbralNuevo;
     }
-    return { pesosOptimos: pesosYUmbrales.pesosOptimos, umbrales: pesosYUmbrales.umbrales, 
+    return { pesosOptimos: pesosYUmbrales.pesosOptimos, umbrales: pesosYUmbrales.umbrales,
       pesosAnteriores: pesosYUmbrales.pesosAnteriores, umbralesAnteriores: pesosYUmbrales.umbralesAnteriores };
   }
 
   calcularErroresLineales(parametrosEntrada: ParametrosEntrada, pesosSinapticos: MatrizPesosSinapticos, umbrales: Umbrales,
     patron: Patron): any {
-    let erroresLineales: number[] = [];
-    let salidasRed: number[] = [];
+    const erroresLineales: number[] = [];
+    const salidasRed: number[] = [];
     for (let i = 0; i < parametrosEntrada.numeroSalidas; i++) {
-      let salidaDeseada = patron.valores[parametrosEntrada.numeroEntradas + i];
+      const salidaDeseada = patron.valores[parametrosEntrada.numeroEntradas + i];
       let indicePatrones = 0;
       let salidaSoma = 0;
       pesosSinapticos.filas.forEach(fila => {
         salidaSoma += patron.valores[indicePatrones] * fila.columnas[i];
         indicePatrones += 1;
-      })
+      });
       salidaSoma = salidaSoma - umbrales.valores[i];
-      let salidaRed = this.funcionActivacion(salidaSoma, parametrosEntrada.tipoDato);
+      const salidaRed = this.funcionActivacion(salidaSoma, parametrosEntrada.tipoDato);
       salidasRed.push(salidaRed);
       erroresLineales.push(salidaDeseada - salidaRed);
     }
@@ -58,11 +56,11 @@ export class EntrenamientoService {
   }
 
   funcionEscalon1(salidaSoma: number, tipoDato: string): number {
-    return salidaSoma >= 0 ? 1 : tipoDato == 'binario' ? 0 : -1;
+    return salidaSoma >= 0 ? 1 : tipoDato === 'binario' ? 0 : -1;
   }
 
   funcionEscalon2(salidaSoma: number, tipoDato: string): number {
-    return salidaSoma > 0 ? 1 : tipoDato == 'binario' ? 0 : -1;
+    return salidaSoma > 0 ? 1 : tipoDato === 'binario' ? 0 : -1;
   }
 
   errorPatron(erroresLineales: number[], numeroSalidas: number) {
@@ -74,9 +72,9 @@ export class EntrenamientoService {
   }
 
   getSalidasDeseadas(patrones: Patron[], numeroEntradas: number, numeroSalidas: number): any[] {
-    let listaSalidas: any[] = [];
+    const listaSalidas: any[] = [];
     for (let i = 0; i < numeroSalidas; i++) {
-      let salidas: number[] = [];
+      const salidas: number[] = [];
       patrones.forEach(patron => {
         salidas.push(patron.valores[numeroEntradas + i]);
       });
@@ -86,21 +84,11 @@ export class EntrenamientoService {
   }
 
   getInitSalidasRed(numeroSalidas: number): any[] {
-    let listaSalidas: any[] = [];
+    const listaSalidas: any[] = [];
     for (let i = 0; i < numeroSalidas; i++) {
-      let salidas: number[] = [];
+      const salidas: number[] = [];
       listaSalidas.push(salidas);
     }
     return listaSalidas;
   }
-
-  getSalidasRed(numeroSalidas: number): any[] {
-    let listaSalidas: any[] = [];
-    for (let i = 0; i < numeroSalidas; i++) {
-      let salidas: number[] = [];
-      listaSalidas.push(salidas);
-    }
-    return listaSalidas;
-  }
-
 }
