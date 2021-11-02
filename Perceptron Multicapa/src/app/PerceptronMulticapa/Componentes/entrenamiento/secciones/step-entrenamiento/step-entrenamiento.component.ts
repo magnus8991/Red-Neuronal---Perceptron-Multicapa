@@ -3,14 +3,14 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { ToastrService } from "ngx-toastr";
-import { Fila } from "src/app/PerceptronUnicapa/Modelos/fila";
-import { Grafica } from "src/app/PerceptronUnicapa/Modelos/grafica";
-import { MatrizPesosSinapticos } from "src/app/PerceptronUnicapa/Modelos/matrizPesosSinapticos";
-import { ParametrosEntrada } from "src/app/PerceptronUnicapa/Modelos/parametrosEntrada";
-import { TablaErroresRMS } from "src/app/PerceptronUnicapa/Modelos/tablaErroresRms";
-import { Umbrales } from "src/app/PerceptronUnicapa/Modelos/umbrales";
-import { EntrenamientoService } from "src/app/PerceptronUnicapa/Servicios/entrenamiento.service";
-import { ParametrosEntrenamientoService } from "src/app/PerceptronUnicapa/Servicios/parametrosEntrenamiento.service";
+import { Fila } from "src/app/PerceptronMulticapa/Modelos/fila";
+import { Grafica } from "src/app/PerceptronMulticapa/Modelos/grafica";
+import { MatrizPesosSinapticos } from "src/app/PerceptronMulticapa/Modelos/matrizPesosSinapticos";
+import { ParametrosEntrada } from "src/app/PerceptronMulticapa/Modelos/parametrosEntrada";
+import { TablaErroresRMS } from "src/app/PerceptronMulticapa/Modelos/tablaErroresRms";
+import { Umbrales } from "src/app/PerceptronMulticapa/Modelos/umbrales";
+import { EntrenamientoService } from "src/app/PerceptronMulticapa/Servicios/entrenamiento.service";
+import { ParametrosEntrenamientoService } from "src/app/PerceptronMulticapa/Servicios/parametrosEntrenamiento.service";
 
 
 @Component({

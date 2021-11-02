@@ -4,10 +4,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ParametrosEntrada } from 'src/app/PerceptronUnicapa/Modelos/parametrosEntrada';
-import { ParametrosEntrenamientoService } from 'src/app/PerceptronUnicapa/Servicios/parametrosEntrenamiento.service';
-import { GetterEntradasService } from 'src/app/PerceptronUnicapa/Servicios/getterEntradas.service';
-import { Patron } from 'src/app/PerceptronUnicapa/Modelos/patron';
+import { ParametrosEntrada } from 'src/app/PerceptronMulticapa/Modelos/parametrosEntrada';
+import { ParametrosEntrenamientoService } from 'src/app/PerceptronMulticapa/Servicios/parametrosEntrenamiento.service';
+import { GetterEntradasService } from 'src/app/PerceptronMulticapa/Servicios/getterEntradas.service';
+import { Patron } from 'src/app/PerceptronMulticapa/Modelos/patron';
 
 @Component({
   selector: 'step-entradas',

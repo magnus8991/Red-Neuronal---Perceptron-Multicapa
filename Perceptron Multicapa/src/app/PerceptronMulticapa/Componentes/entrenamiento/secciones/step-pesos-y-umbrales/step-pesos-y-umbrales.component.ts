@@ -3,13 +3,13 @@ import { ToastrService } from 'ngx-toastr';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatrizPesosSinapticos } from 'src/app/PerceptronUnicapa/Modelos/matrizPesosSinapticos';
-import { Fila } from 'src/app/PerceptronUnicapa/Modelos/fila';
-import { ValidacionesService } from 'src/app/PerceptronUnicapa/Servicios/validaciones.service';
-import { ParametrosEntrenamientoService } from 'src/app/PerceptronUnicapa/Servicios/parametrosEntrenamiento.service';
-import { GetterEntradasService } from 'src/app/PerceptronUnicapa/Servicios/getterEntradas.service';
-import { ParametrosEntrada } from 'src/app/PerceptronUnicapa/Modelos/parametrosEntrada';
-import { Umbrales } from 'src/app/PerceptronUnicapa/Modelos/umbrales';
+import { MatrizPesosSinapticos } from 'src/app/PerceptronMulticapa/Modelos/matrizPesosSinapticos';
+import { Fila } from 'src/app/PerceptronMulticapa/Modelos/fila';
+import { ValidacionesService } from 'src/app/PerceptronMulticapa/Servicios/validaciones.service';
+import { ParametrosEntrenamientoService } from 'src/app/PerceptronMulticapa/Servicios/parametrosEntrenamiento.service';
+import { GetterEntradasService } from 'src/app/PerceptronMulticapa/Servicios/getterEntradas.service';
+import { ParametrosEntrada } from 'src/app/PerceptronMulticapa/Modelos/parametrosEntrada';
+import { Umbrales } from 'src/app/PerceptronMulticapa/Modelos/umbrales';
 
 @Component({
   selector: 'step-pesos-y-umbrales',
