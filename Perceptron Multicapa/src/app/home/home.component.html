@@ -1,18 +1,43 @@
 <div class="cuerpo">
     <div class="container contenido" id="cuerpo">
 
-        <h1 id="TituloPerceptronUnicapa">
-            <b>Perceptron Unicapa</b>
+        <h1 id="TituloPerceptronMulticapa">
+            <b>Perceptron Multicapa</b>
         </h1>
 
-        <div id="TextoPerceptronUnicapa">
+        <div id="TextoPerceptronMulticapa">
             <p>
-                En 1958 el psicólogo Frank Ronsenblant desarrolló un modelo simple de neurona basado en el modelo de
-                McCulloch y Pitts y en una regla de aprendizaje basada en la corrección del error. A este modelo le
-                llamó Perceptrón. Además se caracterizó por su capacidad de aprender a reconocer patrones. El perceptrón
-                está constituido por conjunto de sensores de entrada que reciben los patrones de entrada a reconocer o
-                clasificar y una neurona de salida que se ocupa de clasificar a los patrones de entrada en dos clases,
-                según que la salida de la misma se 1 (activada) o 0 (desactivada).
+                La arquitectura más simple es la llamada Perceptrón Multicapa o Multilayer Perceptron (MLP), aunque
+                debemos tener en cuenta que la presencia de la palabra "perceptrón" en este nombre no es más que una
+                herencia histórica pues, de hecho, un perceptrón multicapa no está formado por perceptrones, sino por
+                neuronas sigmoideas o por neuronas con otro tipo de función de activación (ReLu, etc.), tal y como
+                veremos más adelante.
+            </p>
+            <p>
+                <li>
+                    En esta arquitectura tenemos -por convención- una capa de neuronas de entrada situada a la izquierda
+                    que, en realidad, no aplican ninguna función a los valores de entrada a la red. Es simplemente la
+                    forma
+                    que tenemos de indicar que los valores de entrada llegan de alguna forma a la red neuronal. Es
+                    decir, no
+                    son neuronas artificiales, aunque se representen como tales en el esquema anterior. En esta capa
+                    cada
+                    "neurona" recibe un único valor de entrada.
+                </li>
+            </p>
+            <p>
+                <li>
+                    A continuación, tenemos una o más capas de neuronas en las que cada neurona está conectada con todas
+                    las
+                    neuronas de la capa anterior (o, dicho con otras palabras, los valores de entrada de una neurona son
+                    todos los valores devueltos por las neuronas de la capa anterior). Son las llamadas "capas ocultas".
+                </li>
+            </p>
+            <p>
+                <li>
+                    Por último, tenemos una capa de salida formada por una o más neuronas, en función del tipo de
+                    análisis
+                    que se realice (análisis de regresión, de clasificación binaria o de clasificación multiclase).</li>
             </p>
         </div>
 
@@ -22,38 +47,35 @@
             <b>Características</b>
         </h2>
 
-        <div id="TextoPerceptronUnicapa">
+        <div id="TextoPerceptronMulticapa">
             <p>
-                <li>Sistema capaz de realizar tareas de clasificación de forma automática.</li>
-                <li>A partir de un número de ejemplos etiquetados, el sistema determina la ecuación del plano
-                    discriminante.</li>
-                <li>Puede usarse como neurona dentro de otro tipo de red de neurona artificial.</li>
-                <li>Aprendizaje supervisado y conexiones en un sólo sentido.</li>
-                <li>Es reconocido por su capacidad de aprender a reconocer patrones</li>
-                <li>Es un modelo unidireccional compuesto por dos capas de neuronas.</li>
-                <li>Con respecto al entrenamiento las neuronas de entrada son discretas y la función de activación de
-                    las
-                    de salida es de tipo escalón.</li>
+                <li>Las funciones de transferencia de los elementos de procesado (neuronas) han de ser derivables.</li>
             </p>
         </div>
 
         <br>
 
         <h2 id="TituloAprendizaje">
-            <b>Pasos a seguir para el entrenamiento de la red</b>
+            <b>Limitaciones</b>
         </h2>
 
-        <div id="TextoPerceptronUnicapa">
-            <p>
-                Los pasos a seguir para el aprendizaje son:
-            </p>
-            <li>Inicialización aleatoria de los pesos y umbral.</li>
-            <li>Se toma un patrón de entrada-salida.</li>
-            <li>Se calcula la salida de la red.</li>
-            <li>Si y = d(x) (clasificación correcta).
-                Si y ≠ d(x) (clasificación incorrecta) se modifican los parámetros.</li>
-            <li>Se vuelve al paso 2 hasta completar el conjunto de patrones de entrenamiento.</li>
-            <li>Se repiten los pasos anteriores hasta alcanzar el criterio de parada.</li>
+        <div id="TextoPerceptronMulticapa">
+            <li>El Perceptrón Multicapa no extrapola bien, es decir, si la red se entrena mal o de manera insuficiente,
+                las salidas pueden ser imprecisas.</li>
+            <li>La existencia de mínimos locales en la función de error dificulta considerablemente el entrenamiento,
+                pues una vez alcanzado un mínimo el entrenamiento se detiene aunque no se haya alcanzado la tasa de
+                convergencia fijada.</li>
+        </div>
+
+        <br>
+
+        <h2 id="TituloAprendizaje">
+            <b>Aplicaciones</b>
+        </h2>
+
+        <div id="TextoPerceptronMulticapa">
+            <li>El perceptrón multicapa (de aquí en adelante MLP, MultiLayer Perceptron) se utiliza para resolver
+                problemas de asociación de patrones, segmentación de imágenes, compresión de datos, etc.</li>
         </div>
     </div>
 </div>
