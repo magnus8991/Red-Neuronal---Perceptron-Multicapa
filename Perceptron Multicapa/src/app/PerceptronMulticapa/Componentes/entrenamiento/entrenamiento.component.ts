@@ -54,6 +54,11 @@ export class EntrenamientoComponent implements OnInit {
     this.childStepPesos.parametrosEntrada = this.childStepEntradas.parametrosEntrada;
   }
 
+  actualizarParametrosEntrada() {
+    this.childStepPesos.parametrosEntrada = this.childStepEntradas.parametrosEntrada;
+    this.childStepEntrenamiento.actualizarGraficaSalidasDeseadas();
+  }
+
   reiniciarStepPesos() {
     this.childStepPesos.reiniciarStepPesos();
   }
