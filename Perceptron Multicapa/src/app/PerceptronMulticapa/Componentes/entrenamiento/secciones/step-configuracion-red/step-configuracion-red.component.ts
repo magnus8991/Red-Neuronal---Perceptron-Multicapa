@@ -3,7 +3,7 @@ import { ConfiguracionRed } from 'src/app/PerceptronMulticapa/Modelos/configurac
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
-  selector: 'app-step-configuracion-red',
+  selector: 'step-configuracion-red',
   templateUrl: './step-configuracion-red.component.html',
   styleUrls: ['./step-configuracion-red.component.css']
 })
