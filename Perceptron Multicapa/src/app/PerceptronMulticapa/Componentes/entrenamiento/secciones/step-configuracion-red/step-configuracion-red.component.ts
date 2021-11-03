@@ -12,7 +12,6 @@ export class StepConfiguracionRedComponent implements OnInit {
   formConfiguracionRed: FormGroup;
   funcionesActivacionCapaIntermedia = ['Sigmoide', 'Gausiana', 'Tangente Hiperbolica'];
   funcionesActivacionCapaSalida = ['Sigmoide', 'Gausiana', 'Tangente Hiperbolica', 'Lineal'];
-  funcionActivacionCapaSalida: string;
   configuracionRed: ConfiguracionRed;
   @Output() reloadTraining = new EventEmitter<unknown>();
 
@@ -28,18 +27,13 @@ export class StepConfiguracionRedComponent implements OnInit {
     this.generarCamposCapaIntermedia(1);
   }
 
-  get numeroCapasIntermedias() {
-    return this.formConfiguracionRed.get('numeroCapasIntermedias') as FormArray;
-  }
-
-  get arrayConfiguracionCapasIntermedias() {
-    return this.formConfiguracionRed.get('capasIntermedias') as FormArray;
-  }
-
   generarCamposCapaIntermedia(numeroCapasIntermedias) {
     this.arrayConfiguracionCapasIntermedias.clear();
     for (let i = 0; i < numeroCapasIntermedias; i++) {
-      this.arrayConfiguracionCapasIntermedias.push(this.builder.control(1));
+      this.arrayConfiguracionCapasIntermedias.push(this.builder.group({
+        numeroNeuronas: [1, Validators.required],
+        funcionActivacion: ['', Validators.required]
+      }));
     }
   }
 
@@ -53,5 +47,19 @@ export class StepConfiguracionRedComponent implements OnInit {
 
   reiniciarEntrenamiento() {
     this.reloadTraining.emit();
+  }
+
+  
+
+  get numeroCapasIntermedias() {
+    return this.formConfiguracionRed.get('numeroCapasIntermedias');
+  }
+
+  get funcionActivacionCapaSalida() {
+    return this.formConfiguracionRed.get('funcionActivacionCapaSalida');
+  }
+
+  get arrayConfiguracionCapasIntermedias() {
+    return this.formConfiguracionRed.get('capasIntermedias') as FormArray;
   }
 }
