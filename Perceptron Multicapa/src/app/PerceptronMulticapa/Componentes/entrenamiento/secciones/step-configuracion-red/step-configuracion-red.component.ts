@@ -21,10 +21,11 @@ export class StepConfiguracionRedComponent implements OnInit {
   ngOnInit(): void {
     this.configuracionRed = new ConfiguracionRed();
     this.formConfiguracionRed = this.builder.group({
-      numeroCapasIntermedias: [0, Validators.required],
+      numeroCapasIntermedias: [1, Validators.required],
       funcionActivacionCapaSalida: ['Lineal', Validators.required],
       capasIntermedias: this.builder.array([])
     });
+    this.generarCamposCapaIntermedia(1);
   }
 
   get numeroCapasIntermedias() {
