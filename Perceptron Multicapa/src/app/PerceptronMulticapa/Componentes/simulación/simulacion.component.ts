@@ -168,6 +168,7 @@ export class SimulacionComponent implements OnInit, AfterViewInit {
       case false:
         if (!this.errorCheckAnterior) { this.reiniciarPesosYUmbrales(); }
         this.deshabilitarPesoAnterior();
+        this.reiniciarEntradasYSalidas();
         break;
     }
   }
@@ -240,6 +241,7 @@ export class SimulacionComponent implements OnInit, AfterViewInit {
     inputFile2.value = '';
     fileName2.innerHTML = 'Cargar Umbrales';
     this.disabledFile = true;
+    this.reiniciarEntradasYSalidas();
   }
 
   deshabilitarPesoAnterior() {
@@ -254,6 +256,7 @@ export class SimulacionComponent implements OnInit, AfterViewInit {
     this.deshabilitarCargueArchivos();
     this.mostrarContenidoPesosOptimos();
     this.mostrarContenidoUmbralesOptimos();
+    this.crearEntradasYSalidas();
     this.spinnerAnteriorMode = 'determinate';
     this.spinnerAnteriorValue = 100;
     this.labelAnterior = '¡Listo!';
