@@ -91,4 +91,17 @@ export class EntrenamientoService {
     }
     return listaSalidas;
   }
+
+  clone(obj: any) {
+    if (obj === null || typeof obj !== 'object') {
+      return obj;
+    }
+
+    var temp = obj.constructor();
+    for (var key in obj) {
+      temp[key] = this.clone(obj[key]);
+    }
+
+    return temp;
+  }
 }

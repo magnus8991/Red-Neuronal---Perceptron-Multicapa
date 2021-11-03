@@ -196,14 +196,13 @@ export class StepEntrenamientoComponent implements OnInit, AfterViewInit {
   }
 
   inicializarPesosYUmbralesAnteriores() {
-    this.pesosAnteriores = this.pesosOptimos;
-    this.umbralesAnteriores = this.umbrales;
+    debugger
+    this.pesosAnteriores = this.entrenamientoService.clone(this.pesosOptimos);
+    this.umbralesAnteriores = this.entrenamientoService.clone(this.umbrales);
     this.pesosAnteriores.filas.forEach(fila => {
       for (let i = 0; i < fila.columnas.length; i++) { fila.columnas[i] = 0; }
     });
-    this.umbralesAnteriores.valores.forEach(valor => {
-      valor = 0;
-    });
+    for (let i = 0; i < this.pesosAnteriores.filas[0].columnas.length; i++) this.umbralesAnteriores.valores[i] = 0;
   }
 
   entrenarEvent() {
