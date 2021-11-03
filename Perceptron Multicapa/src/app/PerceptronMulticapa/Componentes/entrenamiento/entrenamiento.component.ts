@@ -7,6 +7,7 @@ import { ParametrosEntrada } from '../../Modelos/parametrosEntrada';
 import { MatrizPesosSinapticos } from '../../Modelos/matrizPesosSinapticos';
 import { ToastrService } from 'ngx-toastr';
 import { Umbrales } from '../../Modelos/umbrales';
+import { StepConfiguracionRedComponent } from './secciones/step-configuracion-red/step-configuracion-red.component';
 
 @Component({
   selector: 'app-entrenamiento',
@@ -17,6 +18,7 @@ export class EntrenamientoComponent implements OnInit {
   @ViewChild(StepEntradasComponent) childStepEntradas;
   @ViewChild(StepPesosYUmbralesComponent) childStepPesos;
   @ViewChild(StepEntrenamientoComponent) childStepEntrenamiento;
+  @ViewChild(StepConfiguracionRedComponent) childStepConfiguracionRed;
 
   constructor(private validaciones: ValidacionesService,
     private toastr: ToastrService) { }
@@ -33,6 +35,7 @@ export class EntrenamientoComponent implements OnInit {
     this.reiniciarStepEntradas();
     this.reiniciarStepPesos();
     this.reiniciarStepEntrenamiento();
+    this.reiniciarStepConfiguracionRed();
   }
 
   entrenar() {
@@ -59,11 +62,11 @@ export class EntrenamientoComponent implements OnInit {
     this.childStepEntrenamiento.actualizarGraficaSalidasDeseadas();
   }
 
+  // Operaciones de reinicio de valores (comunicación entre componentes)
+
   reiniciarStepPesos() {
     this.childStepPesos.reiniciarStepPesos();
   }
-
-  // Operaciones de reinicio de valores (comunicación entre componentes)
 
   reiniciarStepEntradas() {
     this.childStepEntradas.reiniciarStepEntradas();
@@ -71,6 +74,10 @@ export class EntrenamientoComponent implements OnInit {
 
   reiniciarStepEntrenamiento() {
     this.childStepEntrenamiento.reiniciarStepEntrenamiento();
+  }
+
+  reiniciarStepConfiguracionRed() {
+    this.childStepConfiguracionRed.reiniciarStepConfiguracionRed();
   }
 
   // Pre-validacion del entrenamiento
