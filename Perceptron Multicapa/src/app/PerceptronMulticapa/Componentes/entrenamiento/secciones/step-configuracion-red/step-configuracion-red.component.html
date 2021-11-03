@@ -20,24 +20,6 @@
                 <mat-icon matSuffix>repeat</mat-icon>
               </mat-form-field>
             </div>
-            <div
-              *ngFor="let capa of arrayConfiguracionCapasIntermedias.controls; let i = index"
-              class="form-group"
-              style="text-align: center;"
-              formArrayName="capasIntermedias"
-            >
-              <mat-form-field class="example-full-width" appearance="legacy" aria-disabled="true">
-                <mat-label>Capa intermedia {{i}} </mat-label>
-                <input
-                  type="number"
-                  matInput
-                  placeholder="Numero de capas intermedias"
-                  [formControlName]="i"
-                  min="1"
-                />
-                <mat-icon matSuffix>repeat</mat-icon>
-              </mat-form-field>
-            </div>
           </mat-card>
         </div>
         <div class="col-md-6" >
@@ -62,6 +44,31 @@
           </mat-card>
         </div>
       </div>
+      <div class="row" style="margin-top: 20px">
+        <mat-card>
+          <div class="row" >
+            <div
+              *ngFor="let capa of arrayConfiguracionCapasIntermedias.controls; let i = index"
+              class="col-md-4"
+              style="text-align: center;"
+              formArrayName="capasIntermedias"
+            >
+              <mat-form-field class="example-full-width" appearance="legacy" aria-disabled="true">
+                <mat-label>Capa intermedia {{i}} </mat-label>
+                <input
+                  type="number"
+                  matInput
+                  placeholder="Numero de capas intermedias"
+                  [formControlName]="i"
+                  min="1"
+                />
+                <mat-icon matSuffix>repeat</mat-icon>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card>
+      </div>
     </form>
   </div>
+
 </div>
