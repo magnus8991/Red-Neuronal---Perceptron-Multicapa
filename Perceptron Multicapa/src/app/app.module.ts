@@ -10,7 +10,7 @@ import { EntrenamientoComponent } from './PerceptronMulticapa/Componentes/entren
 import { SimulacionComponent } from './PerceptronMulticapa/Componentes/simulación/simulacion.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ParametrosEntrenamientoService } from './PerceptronMulticapa/Servicios/parametrosEntrenamiento.service';
 import { SimulacionService } from './PerceptronMulticapa/Servicios/simulacion.service';
 import { MatCardModule } from '@angular/material/card';

@@ -11,6 +11,12 @@
                     (reloadParamsAndConfig)="reiniciarParametrosYConfiguracion()">
                 </step-entradas>
             </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>
+              <span>Configuracion de la red</span>
+            </ng-template>
+            <app-step-configuracion-red> </app-step-configuracion-red>
+          </mat-step>
             <mat-step>
                 <ng-template matStepLabel><span>Configuración de la Red</span></ng-template>
                 <step-configuracion-red (reloadTraining)="reiniciarEntrenamiento()">
