@@ -75,20 +75,27 @@ export class GetterEntradasService {
       indice += 1;
       const valores: number[] = [];
       this.getEntradas(linea).forEach(entrada => {
-        valores.push(parseInt(entrada));
-        tipoDato = parseInt(entrada) === 1 ? tipoDato : parseInt(entrada) === 0 ? tipoDato === 'bipolar' ? null : 'binario' :
-          parseInt(entrada) === -1 ? tipoDato === 'binario' ? null : 'bipolar' : null;
-        if (tipoDato == null) { error = true; }
+        if (isNaN(+entrada)) error = true;
+        let valor = Number.isInteger(entrada) ? parseInt(entrada) : parseFloat(entrada);
+        valores.push(valor);
+        tipoDato = Number.isInteger(valor) ? (valor > 0 ? (valor > 1 ? 'entero' : tipoDato) : (tipoDato.includes('real') ? 'real' :
+          tipoDato.includes('entero') ? 'entero' : (valor === 0 ? (tipoDato.includes('') || tipoDato.includes('binario') ? 'binario' :
+          tipoDato) : valor === -1 ? (tipoDato.includes('') || tipoDato.includes('bipolar') ? 'bipolar' : tipoDato) : 
+          tipoDato.includes('real') ? 'real' : 'entero'))) : 'real';
       });
       this.getSalidas(linea).forEach(salida => {
-        valores.push(parseInt(salida));
-        tipoDato = parseInt(salida) === 1 ? tipoDato : parseInt(salida) === 0 ? tipoDato === 'bipolar' ? null : 'binario' :
-          parseInt(salida) === -1 ? tipoDato === 'binario' ? null : 'bipolar' : null;
-        if (tipoDato == null) { error = true; }
+        if (isNaN(+salida))  error = true;
+        let valor = Number.isInteger(salida) ? parseInt(salida) : parseFloat(salida);
+        valores.push(valor);
+        tipoDato = Number.isInteger(valor) ? (valor > 0 ? (valor > 1 ? 'entero' : tipoDato) : (tipoDato.includes('real') ? 'real' :
+          tipoDato.includes('entero') ? 'entero' : (valor === 0 ? (tipoDato.includes('') || tipoDato.includes('binario') ? 'binario' :
+            tipoDato) : valor === -1 ? (tipoDato.includes('') || tipoDato.includes('bipolar') ? 'bipolar' : tipoDato) : 
+            tipoDato.includes('real') ? 'real' : 'entero'))) : 'real';
       });
       patrones.push(new Patron(indice, valores));
     });
-    if (error) { tipoDato = null; }
+    tipoDato = tipoDato === '' ? 'entero' : tipoDato;
+    if (error) { tipoDato = null }
     return { patrones: patrones, tipoDato: tipoDato };
   }
 
