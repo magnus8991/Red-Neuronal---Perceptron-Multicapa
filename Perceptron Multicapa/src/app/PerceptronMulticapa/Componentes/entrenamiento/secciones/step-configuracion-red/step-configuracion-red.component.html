@@ -27,7 +27,7 @@
             <label style="margin-bottom: 20px" for="archivoEntradas">Funcion de activacion capa de salida</label>
             <div class="form-group" style="text-align: center;">
               <mat-form-field class="example-full-width" appearance="legacy" aria-disabled="true">
-                <mat-label>No. Capas intermedias</mat-label>
+                <mat-label>Funciones de activacion</mat-label>
                 <select
                   matNativeControl
                   [(ngModel)]="funcionActivacionCapaSalida"
@@ -49,7 +49,7 @@
           <div class="row" >
             <div
               *ngFor="let capa of arrayConfiguracionCapasIntermedias.controls; let i = index"
-              class="col-md-4"
+              class="col-md-3"
               style="text-align: center;"
               formArrayName="capasIntermedias"
             >
@@ -62,7 +62,19 @@
                   [formControlName]="i"
                   min="1"
                 />
-                <mat-icon matSuffix>repeat</mat-icon>
+              </mat-form-field>
+              <mat-form-field class="example-full-width" appearance="legacy" aria-disabled="true">
+                <mat-label>Funcion de activacion {{i}} </mat-label>
+                <select
+                  matNativeControl
+                  name="funcionesActivacionCapaSalida"
+                  [formControlName]="i"
+                >
+                  <option value="" selected>Seleccione...</option>
+                  <option *ngFor="let funcionActivacion of funcionesActivacionCapaSalida" [value]="funcionActivacion">
+                    {{funcionActivacion}}
+                  </option>
+                </select>
               </mat-form-field>
             </div>
           </div>
