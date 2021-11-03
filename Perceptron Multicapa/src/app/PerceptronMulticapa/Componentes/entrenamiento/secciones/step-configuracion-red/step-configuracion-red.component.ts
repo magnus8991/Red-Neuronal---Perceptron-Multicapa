@@ -30,26 +30,32 @@ export class StepConfiguracionRedComponent implements OnInit {
   generarCamposCapaIntermedia(numeroCapasIntermedias) {
     this.arrayConfiguracionCapasIntermedias.clear();
     for (let i = 0; i < numeroCapasIntermedias; i++) {
-      this.arrayConfiguracionCapasIntermedias.push(this.builder.group({
-        numeroNeuronas: [1, Validators.required],
-        funcionActivacion: ['', Validators.required]
-      }));
+      this.arrayConfiguracionCapasIntermedias.push(this.nuevaCapaIntermedia());
     }
   }
 
-  // Operaciones de reinicio de valores
+  get arrayConfiguracionCapasIntermedias() {
+    return this.formConfiguracionRed.get('capasIntermedias') as FormArray;
+  }
+
+  nuevaCapaIntermedia(): FormGroup {
+    return this.builder.group({
+      numeroNeuronas: 1,
+      funcionActivacion: ''
+    });
+  }
+
+  onSubmit() {
+    console.log(this.formConfiguracionRed.value);
+  }
 
   reiniciarStepConfiguracionRed() {
     this.configuracionRed = new ConfiguracionRed();
   }
 
-  // Eventos de reinicio y actualizacion de valores
-
   reiniciarEntrenamiento() {
     this.reloadTraining.emit();
   }
-
-  
 
   get numeroCapasIntermedias() {
     return this.formConfiguracionRed.get('numeroCapasIntermedias');
@@ -59,7 +65,4 @@ export class StepConfiguracionRedComponent implements OnInit {
     return this.formConfiguracionRed.get('funcionActivacionCapaSalida');
   }
 
-  get arrayConfiguracionCapasIntermedias() {
-    return this.formConfiguracionRed.get('capasIntermedias') as FormArray;
-  }
 }
