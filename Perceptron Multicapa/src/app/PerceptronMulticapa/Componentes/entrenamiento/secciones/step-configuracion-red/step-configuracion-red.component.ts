@@ -3,11 +3,16 @@ import { ConfiguracionRed } from 'src/app/PerceptronMulticapa/Modelos/configurac
 import {FormBuilder, FormGroup, Validators, FormArray} from '@angular/forms';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'step-configuracion-red',
   templateUrl: './step-configuracion-red.component.html',
   styleUrls: ['./step-configuracion-red.component.css']
 })
 export class StepConfiguracionRedComponent implements OnInit {
+  formConfiguracionRed: FormGroup;
+  funcionesActivacionCapaIntermedia = ['Sigmoide', 'Gausiana', 'Tangente Hiperbolica'];
+  funcionesActivacionCapaSalida = ['Sigmoide', 'Gausiana', 'Tangente Hiperbolica', 'Lineal'];
+  funcionActivacionCapaSalida: string;
   configuracionRed: ConfiguracionRed;
   @Output() reloadTraining = new EventEmitter<unknown>();
 
@@ -27,11 +32,14 @@ export class StepConfiguracionRedComponent implements OnInit {
   }
 
   get arrayConfiguracionCapasIntermedias() {
-    return this.formConfiguracionRed.get('configuracionCapasIntermedias') as FormArray;
+    return this.formConfiguracionRed.get('capasIntermedias') as FormArray;
   }
 
-  generarCamposCapaIntermedia() {
-    this.arrayConfiguracionCapasIntermedias.push(this.builder.control(1));
+  generarCamposCapaIntermedia(numeroCapasIntermedias) {
+    this.arrayConfiguracionCapasIntermedias.clear();
+    for (let i = 0; i < numeroCapasIntermedias; i++) {
+      this.arrayConfiguracionCapasIntermedias.push(this.builder.control(1));
+    }
   }
 
   // Operaciones de reinicio de valores
@@ -45,11 +53,4 @@ export class StepConfiguracionRedComponent implements OnInit {
   reiniciarEntrenamiento() {
     this.reloadTraining.emit();
   }
-
-  formConfiguracionRed: FormGroup;
-
-  funcionesActivacionCapaIntermedia = ['Sigmoide', 'Gausiana', 'Tangente Hiperbolica'];
-  funcionesActivacionCapaSalida = ['Sigmoide', 'Gausiana', 'Tangente Hiperbolica', 'Lineal'];
-  funcionActivacionCapaSalida: string;
-
 }

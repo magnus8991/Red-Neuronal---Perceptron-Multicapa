@@ -8,8 +8,33 @@
             <div class="form-group" style="text-align: center;">
               <mat-form-field class="example-full-width" appearance="legacy" aria-disabled="true">
                 <mat-label>No. Capas intermedias</mat-label>
-                <input (ngModelChange)="" type="number" matInput placeholder="Numero de capas intermedias" name="numeroCapasIntermedias"
-                       formControlName="numeroCapasIntermedias" min="1" />
+                <input
+                  type="number"
+                  matInput
+                  placeholder="Numero de capas intermedias"
+                  name="numeroCapasIntermedias"
+                  formControlName="numeroCapasIntermedias"
+                  min="1"
+                  (ngModelChange)="generarCamposCapaIntermedia($event)"
+                />
+                <mat-icon matSuffix>repeat</mat-icon>
+              </mat-form-field>
+            </div>
+            <div
+              *ngFor="let capa of arrayConfiguracionCapasIntermedias.controls; let i = index"
+              class="form-group"
+              style="text-align: center;"
+              formArrayName="capasIntermedias"
+            >
+              <mat-form-field class="example-full-width" appearance="legacy" aria-disabled="true">
+                <mat-label>Capa intermedia {{i}} </mat-label>
+                <input
+                  type="number"
+                  matInput
+                  placeholder="Numero de capas intermedias"
+                  [formControlName]="i"
+                  min="1"
+                />
                 <mat-icon matSuffix>repeat</mat-icon>
               </mat-form-field>
             </div>
@@ -26,7 +51,7 @@
                   [(ngModel)]="funcionActivacionCapaSalida"
                   name="funcionesActivacionCapaSalida"
                 >
-                  <option value="" selected></option>
+                  <option value="" selected>Seleccione...</option>
                   <option *ngFor="let funcionActivacion of funcionesActivacionCapaSalida" [value]="funcionActivacion">
                     {{funcionActivacion}}
                   </option>
