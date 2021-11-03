@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
+import { CapaIntermedia } from '../Modelos/capaIntermedia';
+import { CapaSalida } from '../Modelos/capaSalida';
+import { ConfiguracionRed } from '../Modelos/configuracionRed';
 import { MatrizPesosSinapticos } from '../Modelos/matrizPesosSinapticos';
 import { ParametrosEntrada } from '../Modelos/parametrosEntrada';
 import { Umbrales } from '../Modelos/umbrales';
@@ -11,11 +14,12 @@ export class ValidacionesService {
 
   constructor() { }
 
-  checkConfiguracionRed(parametrosEntrada: ParametrosEntrada, pesosSinapticos: MatrizPesosSinapticos, umbrales: Umbrales,
-    checkDelta: boolean, checkDeltaModificada: boolean, numeroIteraciones: any, rataAprendizaje: any, errorMaximoPermitido: any) {
+  checkConfiguracionGeneralRed(parametrosEntrada: ParametrosEntrada, pesosSinapticos: MatrizPesosSinapticos, umbrales: Umbrales,
+    checkDelta: boolean, checkDeltaModificada: boolean, numeroIteraciones: any, rataAprendizaje: any, errorMaximoPermitido: any,
+    configuracionRed: ConfiguracionRed): boolean {
     return this.checkParametrosEntrada(parametrosEntrada) && this.checkAlgoritmTraining(checkDelta, checkDeltaModificada) &&
       this.checkParametrosEntrenamiento(numeroIteraciones, rataAprendizaje, errorMaximoPermitido) &&
-      this.checkPesosYUmbrales(pesosSinapticos, umbrales);
+      this.checkConfiguracionRed(configuracionRed) && this.checkPesosYUmbrales(pesosSinapticos, umbrales);
   }
 
   checkParametrosEntrada(parametrosEntrada: ParametrosEntrada) {
@@ -56,4 +60,26 @@ export class ValidacionesService {
     return !(parseFloat(errorMaximoPermitido) < 0 || errorMaximoPermitido == null || false);
   }
 
+  checkConfiguracionRed(configuracionRed: ConfiguracionRed): boolean {
+    return this.checkFuncionActivacionCapa(configuracionRed.capaSalida) && 
+      this.checkNumeroCapasONeuronas(configuracionRed.numeroCapasIntermedias) &&
+      this.checkConfiguracionCapasIntermedias(configuracionRed.capasIntermedias);
+  }
+
+  checkFuncionActivacionCapa(capa: CapaSalida | CapaIntermedia): boolean {
+    return !(capa.funcionActivacion == 0 || capa.funcionActivacion == '0' || capa.funcionActivacion == null || false);
+  }
+
+  checkNumeroCapasONeuronas(valor: any): boolean {
+    return !(valor <= 0 || valor == null || false);
+  }
+
+  checkConfiguracionCapasIntermedias(capasIntermedias: CapaIntermedia[]): boolean {
+    let errores = 0;
+    capasIntermedias.forEach(capaIntermedia => {
+      errores += this.checkFuncionActivacionCapa(capaIntermedia) ? 0 : 1;
+      errores += this.checkNumeroCapasONeuronas(capaIntermedia.numeroNeuronas) ? 0 : 1;
+    });
+    return errores == 0;
+  }
 }

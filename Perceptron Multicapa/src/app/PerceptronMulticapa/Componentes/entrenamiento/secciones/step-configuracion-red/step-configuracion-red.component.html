@@ -29,7 +29,7 @@
                     {{funcionActivacion}}
                   </option>
                 </select>
-                <mat-icon matSuffix>toggle_on</mat-icon>
+                <mat-icon matSuffix>notifications</mat-icon>
               </mat-form-field>
             </div>
           </mat-card>
@@ -57,16 +57,18 @@
                 <mat-form-field class="example-full-width" appearance="legacy" aria-disabled="true">
                   <mat-label>Numero de neuronas</mat-label>
                   <input min="1" type="number" matInput placeholder="Numero de neuronas" formControlName="numeroNeuronas" />
+                  <mat-icon matSuffix>tag</mat-icon>
                 </mat-form-field>
                 <mat-form-field class="example-full-width" appearance="legacy" aria-disabled="true">
                   <mat-label>Funcion de activacion</mat-label>
                   <select matNativeControl formControlName="funcionActivacion" name="funcionActivacion{{i}}" >
-                    <option value="" selected>Seleccione...</option>
+                    <option value="0" selected>Seleccione...</option>
                     <option *ngFor="let funcionActivacion of funcionesActivacionCapaIntermedia"
                       [value]="funcionActivacion">
                       {{funcionActivacion}}
                     </option>
                   </select>
+                  <mat-icon matSuffix>notifications</mat-icon>
                 </mat-form-field>
               </div>
             </mat-card>

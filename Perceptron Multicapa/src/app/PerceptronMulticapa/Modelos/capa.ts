@@ -1,5 +1,7 @@
 export class Capa {
-    checkSigmoide: boolean = false;
-    checkGausiana: boolean = false;
-    checkTanhHyp: boolean = false;
+    funcionActivacion: any;
+
+    constructor(funcionActivacion: any) {
+        this.funcionActivacion = funcionActivacion;
+    }
 }

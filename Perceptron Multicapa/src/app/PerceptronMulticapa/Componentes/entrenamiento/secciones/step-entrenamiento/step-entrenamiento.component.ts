@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
+import { ConfiguracionRed } from 'src/app/PerceptronMulticapa/Modelos/configuracionRed';
 import { Fila } from 'src/app/PerceptronMulticapa/Modelos/fila';
 import { Grafica } from 'src/app/PerceptronMulticapa/Modelos/grafica';
 import { MatrizPesosSinapticos } from 'src/app/PerceptronMulticapa/Modelos/matrizPesosSinapticos';
@@ -45,7 +46,7 @@ export class StepEntrenamientoComponent implements OnInit, AfterViewInit {
   umbrales: Umbrales;
   pesosAnteriores: MatrizPesosSinapticos;
   umbralesAnteriores: Umbrales;
-  @Output() reloadEntrenamiento = new EventEmitter<unknown>();
+  @Output() reloadTraining = new EventEmitter<unknown>();
   @Output() trainingNetwork = new EventEmitter<unknown>();
   @Output() saveWeightAndUmbrals = new EventEmitter<unknown>();
 
@@ -102,7 +103,7 @@ export class StepEntrenamientoComponent implements OnInit, AfterViewInit {
   // Operaciones de reinicio de valores
 
   reiniciarEntrenamiento() {
-    this.reloadEntrenamiento.emit();
+    this.reloadTraining.emit();
   }
 
   reiniciarStepEntrenamiento() {
@@ -131,7 +132,7 @@ export class StepEntrenamientoComponent implements OnInit, AfterViewInit {
 
   // Operaciones de entrenamiento de la red neuronal
 
-  entrenar(ConfigYParamsTraining, parametrosEntrada: ParametrosEntrada) {
+  entrenar(ConfigYParamsTraining, parametrosEntrada: ParametrosEntrada, configuracionRed: ConfiguracionRed) {
     let indiceIteraciones = 1;
     const rataDinamica = 0;
     this.inicializarValores();

@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ConfiguracionRed } from 'src/app/PerceptronMulticapa/Modelos/configuracionRed';
 import {FormBuilder, FormGroup, Validators, FormArray} from '@angular/forms';
+import { CapaIntermedia } from 'src/app/PerceptronMulticapa/Modelos/capaIntermedia';
+import { CapaSalida } from 'src/app/PerceptronMulticapa/Modelos/capaSalida';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -18,14 +20,16 @@ export class StepConfiguracionRedComponent implements OnInit {
   constructor(private builder: FormBuilder) { }
 
   ngOnInit(): void {
-    this.configuracionRed = new ConfiguracionRed();
+    this.configuracionRed = new ConfiguracionRed(1,[new CapaIntermedia(1,'')],new CapaSalida(''));
     this.formConfiguracionRed = this.builder.group({
       numeroCapasIntermedias: [1, Validators.required],
-      funcionActivacionCapaSalida: ['Lineal', Validators.required],
+      funcionActivacionCapaSalida: [0, Validators.required],
       capasIntermedias: this.builder.array([])
     });
     this.generarCamposCapaIntermedia(1);
   }
+
+  // Operaciones de controles y formulario
 
   generarCamposCapaIntermedia(numeroCapasIntermedias) {
     this.arrayConfiguracionCapasIntermedias.clear();
@@ -34,14 +38,10 @@ export class StepConfiguracionRedComponent implements OnInit {
     }
   }
 
-  get arrayConfiguracionCapasIntermedias() {
-    return this.formConfiguracionRed.get('capasIntermedias') as FormArray;
-  }
-
   nuevaCapaIntermedia(): FormGroup {
     return this.builder.group({
-      numeroNeuronas: 1,
-      funcionActivacion: ''
+      numeroNeuronas: [1, Validators.required],
+      funcionActivacion: [0, Validators.required]
     });
   }
 
@@ -49,20 +49,35 @@ export class StepConfiguracionRedComponent implements OnInit {
     console.log(this.formConfiguracionRed.value);
   }
 
+  // Operaciones de reinicio y actualizacion de valores
+
   reiniciarStepConfiguracionRed() {
-    this.configuracionRed = new ConfiguracionRed();
+    this.arrayConfiguracionCapasIntermedias.clear();
+    this.generarCamposCapaIntermedia(1);
+    this.numeroCapasIntermedias.setValue(1);
+    this.funcionActivacionCapaSalida.setValue(0);
+    this.configuracionRed = new ConfiguracionRed(1,[new CapaIntermedia(1,'')],new CapaSalida(''));
   }
+
+  actualizarConfiguracionRed(): ConfiguracionRed {
+    const capasIntermedias: CapaIntermedia[] = [];
+    this.arrayConfiguracionCapasIntermedias.controls.forEach(capaIntermedia => {
+      capasIntermedias.push(new CapaIntermedia(capaIntermedia.value.numeroNeuronas,
+      capaIntermedia.value.funcionActivacion));
+    });
+    return new ConfiguracionRed(this.numeroCapasIntermedias.value,capasIntermedias,
+      new CapaSalida(this.funcionActivacionCapaSalida.value));
+  }
+
+  // Eventos de reinicio y actualizacion de valores
 
   reiniciarEntrenamiento() {
     this.reloadTraining.emit();
   }
 
-  get numeroCapasIntermedias() {
-    return this.formConfiguracionRed.get('numeroCapasIntermedias');
-  }
+  // Obtencion de los controles del formulario
 
-  get funcionActivacionCapaSalida() {
-    return this.formConfiguracionRed.get('funcionActivacionCapaSalida');
-  }
-
+  get arrayConfiguracionCapasIntermedias() { return this.formConfiguracionRed.get('capasIntermedias') as FormArray; }
+  get numeroCapasIntermedias() { return this.formConfiguracionRed.get('numeroCapasIntermedias'); }
+  get funcionActivacionCapaSalida() { return this.formConfiguracionRed.get('funcionActivacionCapaSalida'); }
 }

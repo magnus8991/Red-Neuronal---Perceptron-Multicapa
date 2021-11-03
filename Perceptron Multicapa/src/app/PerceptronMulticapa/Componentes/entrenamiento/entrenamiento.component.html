@@ -13,7 +13,7 @@
             </mat-step>
             <mat-step>
                 <ng-template matStepLabel><span>Configuración de la Red</span></ng-template>
-                <step-configuracion-red>
+                <step-configuracion-red (reloadTraining)="reiniciarEntrenamiento()" >
                 </step-configuracion-red>
             </mat-step>
             <mat-step>
@@ -22,7 +22,7 @@
             </mat-step>
             <mat-step>
                 <ng-template matStepLabel><span>Entrenar</span></ng-template>
-                <step-entrenamiento (reloadEntrenamiento)="reiniciarEntrenamiento()" (trainingNetwork)="entrenar()"
+                <step-entrenamiento (reloadTraining)="reiniciarEntrenamiento()" (trainingNetwork)="entrenar()"
                     (saveWeightAndUmbrals)="guardarPesosYUmbrales()"></step-entrenamiento>
             </mat-step>
         </mat-stepper>

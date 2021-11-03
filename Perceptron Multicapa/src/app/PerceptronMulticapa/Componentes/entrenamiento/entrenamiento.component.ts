@@ -8,6 +8,7 @@ import { MatrizPesosSinapticos } from '../../Modelos/matrizPesosSinapticos';
 import { ToastrService } from 'ngx-toastr';
 import { Umbrales } from '../../Modelos/umbrales';
 import {StepConfiguracionRedComponent} from './secciones/step-configuracion-red/step-configuracion-red.component';
+import { ConfiguracionRed } from '../../Modelos/configuracionRed';
 
 @Component({
   selector: 'app-entrenamiento',
@@ -46,9 +47,10 @@ export class EntrenamientoComponent implements OnInit {
       rataAprendizaje: this.childStepEntradas.rataAprendizaje.value,
       errorMaximoPermitido: this.childStepEntradas.errorMaximoPermitido.value,
     };
+    const configuracionRed = this.childStepConfiguracionRed.actualizarConfiguracionRed();
     if (!this.isValidConfigYParametros(ConfigYParamsTraining, this.childStepEntradas.parametrosEntrada,
-      this.childStepPesos.pesosSinapticos, this.childStepPesos.umbrales)) { return; }
-    this.childStepEntrenamiento.entrenar(ConfigYParamsTraining, this.childStepEntradas.parametrosEntrada);
+      this.childStepPesos.pesosSinapticos, this.childStepPesos.umbrales, configuracionRed)) { return; }
+    this.childStepEntrenamiento.entrenar(ConfigYParamsTraining, this.childStepEntradas.parametrosEntrada, configuracionRed);
   }
 
   guardarPesosYUmbrales() {
@@ -83,16 +85,17 @@ export class EntrenamientoComponent implements OnInit {
   // Pre-validacion del entrenamiento
 
   isValidConfigYParametros(configYParamsTraining, parametrosEntrada: ParametrosEntrada, pesosSinapticos: MatrizPesosSinapticos,
-    umbrales: Umbrales): boolean {
-    if (!this.validaciones.checkConfiguracionRed(parametrosEntrada, pesosSinapticos, umbrales, configYParamsTraining.checkDelta,
-      // tslint:disable-next-line:max-line-length
-      configYParamsTraining.checkDeltaModificada, configYParamsTraining.numeroIteraciones, configYParamsTraining.rataAprendizaje, configYParamsTraining.errorMaximoPermitido)) {
+    umbrales: Umbrales, configuracionRed: ConfiguracionRed): boolean {
+    if (!this.validaciones.checkConfiguracionGeneralRed(parametrosEntrada, pesosSinapticos, umbrales, configYParamsTraining.checkDelta,
+      configYParamsTraining.checkDeltaModificada, configYParamsTraining.numeroIteraciones, configYParamsTraining.rataAprendizaje, 
+      configYParamsTraining.errorMaximoPermitido, configuracionRed)) {
       this.toastr.warning(!this.validaciones.checkParametrosEntrada(parametrosEntrada) ?
         'Verifique el cargue y la configuración de los parámetros de entrada' :
         !this.validaciones.checkAlgoritmTraining(configYParamsTraining.checkDelta, configYParamsTraining.checkDeltaModificada) ?
           'Verifique la configuración del algoritmo de entrenamiento' : !this.validaciones.checkParametrosEntrenamiento(
             configYParamsTraining.numeroIteraciones, configYParamsTraining.rataAprendizaje, configYParamsTraining.errorMaximoPermitido) ?
-            'Verifique la configuración de los parámetros de entrenamiento' : 'Verifique la configuración de los pesos sinápticos y umbrales', '¡Advertencia!');
+            'Verifique la configuración de los parámetros de entrenamiento' : !this.validaciones.checkConfiguracionRed(configuracionRed) ?
+            'Verifique la configuración de la red (capas intermedias y funciones de activación)' : 'Verifique la configuración de los pesos sinápticos y umbrales', '¡Advertencia!');
       return false;
     }
     return true;
