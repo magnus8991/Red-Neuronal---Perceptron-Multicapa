@@ -8,7 +8,7 @@
             <div class="form-group" style="text-align: center;">
               <mat-form-field class="example-full-width" appearance="legacy" aria-disabled="true">
                 <mat-label>No. Capas intermedias</mat-label>
-                <input type="number" matInput placeholder="Numero de capas intermedias" name="numeroCapasIntermedias"
+                <input (ngModelChange)="" type="number" matInput placeholder="Numero de capas intermedias" name="numeroCapasIntermedias"
                        formControlName="numeroCapasIntermedias" min="1" />
                 <mat-icon matSuffix>repeat</mat-icon>
               </mat-form-field>
