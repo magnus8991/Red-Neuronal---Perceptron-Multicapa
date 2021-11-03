@@ -1,6 +1,6 @@
 <div class="row" style="margin-top: 20px">
   <div class="col-md-12">
-    <form [formGroup]=formConfiguracionRed>
+    <form [formGroup]=formConfiguracionRed (ngSubmit)="onSubmit()">
       <div class="row">
         <div class="col-md-4">
           <mat-card>
@@ -47,20 +47,19 @@
         </div>
       </div>
       <br>
-        <div class="row">
-          <div *ngFor="let capa of arrayConfiguracionCapasIntermedias.controls; let i = index" class="col-md-3"
-             formArrayName="capasIntermedias">
+        <div class="row" formArrayName="capasIntermedias">
+          <div *ngFor="let capa of arrayConfiguracionCapasIntermedias.controls; let i = index" class="col-md-3">
              <div [formGroupName]="i">
             <mat-card style="margin-bottom: 5%;">
-              <label for="configuracionRed">Capa intermedia {{i+1}}</label>
+              <label for="configuracionRed"> Capa intermedia {{i+1}}</label>
               <div style="text-align: center;">
                 <mat-form-field class="example-full-width" appearance="legacy" aria-disabled="true">
                   <mat-label>Numero de neuronas</mat-label>
-                  <input type="number" matInput placeholder="Numero de capas intermedias" [formControlName]="numeroNeuronas" min="1" />
+                  <input min="1" type="number" matInput placeholder="Numero de neuronas" formControlName="numeroNeuronas" />
                 </mat-form-field>
                 <mat-form-field class="example-full-width" appearance="legacy" aria-disabled="true">
                   <mat-label>Funcion de activacion</mat-label>
-                  <select matNativeControl [formControlName]="funcionActivacion" name="funcionActivacion{{i}}" >
+                  <select matNativeControl formControlName="funcionActivacion" name="funcionActivacion{{i}}" >
                     <option value="" selected>Seleccione...</option>
                     <option *ngFor="let funcionActivacion of funcionesActivacionCapaIntermedia"
                       [value]="funcionActivacion">
@@ -73,6 +72,9 @@
             </div>
           </div>
       </div>
+      <button mat-raised-button color="rollback">
+        <mat-icon matSuffix>restart_alt</mat-icon> Mostrar Datos
+      </button>
     </form>
   </div>
 
