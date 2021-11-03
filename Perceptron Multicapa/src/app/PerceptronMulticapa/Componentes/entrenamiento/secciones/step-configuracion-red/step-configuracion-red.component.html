@@ -1,0 +1,42 @@
+<div class="row" style="margin-top: 20px">
+  <div class="col-md-12">
+    <form [formGroup]=formConfiguracionRed>
+      <div class="row" >
+        <div class="col-md-6" >
+          <mat-card>
+            <label style="margin-bottom: 20px" for="archivoEntradas">Configuracion de la red</label>
+            <div class="form-group" style="text-align: center;">
+              <mat-form-field class="example-full-width" appearance="legacy" aria-disabled="true">
+                <mat-label>No. Capas intermedias</mat-label>
+                <input type="number" matInput placeholder="Numero de capas intermedias" name="numeroCapasIntermedias"
+                       formControlName="numeroCapasIntermedias" min="1" />
+                <mat-icon matSuffix>repeat</mat-icon>
+              </mat-form-field>
+            </div>
+          </mat-card>
+        </div>
+        <div class="col-md-6" >
+          <mat-card>
+            <label style="margin-bottom: 20px" for="archivoEntradas">Funcion de activacion capa de salida</label>
+            <div class="form-group" style="text-align: center;">
+              <mat-form-field class="example-full-width" appearance="legacy" aria-disabled="true">
+                <mat-label>No. Capas intermedias</mat-label>
+                <select
+                  matNativeControl
+                  [(ngModel)]="funcionActivacionCapaSalida"
+                  name="funcionesActivacionCapaSalida"
+                >
+                  <option value="" selected></option>
+                  <option *ngFor="let funcionActivacion of funcionesActivacionCapaSalida" [value]="funcionActivacion">
+                    {{funcionActivacion}}
+                  </option>
+                </select>
+                <mat-icon matSuffix>repeat</mat-icon>
+              </mat-form-field>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

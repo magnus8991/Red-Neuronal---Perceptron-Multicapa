@@ -1,8 +1,8 @@
-import { Injectable } from "@angular/core";
-import { AbstractControl } from "@angular/forms";
-import { MatrizPesosSinapticos } from "../Modelos/matrizPesosSinapticos";
-import { ParametrosEntrada } from "../Modelos/parametrosEntrada";
-import { Umbrales } from "../Modelos/umbrales";
+import { Injectable } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
+import { MatrizPesosSinapticos } from '../Modelos/matrizPesosSinapticos';
+import { ParametrosEntrada } from '../Modelos/parametrosEntrada';
+import { Umbrales } from '../Modelos/umbrales';
 
 @Injectable({
   providedIn: 'root'

@@ -10,7 +10,7 @@ import { EntrenamientoComponent } from './PerceptronMulticapa/Componentes/entren
 import { SimulacionComponent } from './PerceptronMulticapa/Componentes/simulación/simulacion.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ParametrosEntrenamientoService } from './PerceptronMulticapa/Servicios/parametrosEntrenamiento.service';
 import { SimulacionService } from './PerceptronMulticapa/Servicios/simulacion.service';
 import { MatCardModule } from '@angular/material/card';
@@ -28,6 +28,7 @@ import { EntrenamientoService } from './PerceptronMulticapa/Servicios/entrenamie
 import { StepEntradasComponent } from './PerceptronMulticapa/Componentes/entrenamiento/secciones/step-entradas/step-entradas.component';
 import { StepPesosYUmbralesComponent } from './PerceptronMulticapa/Componentes/entrenamiento/secciones/step-pesos-y-umbrales/step-pesos-y-umbrales.component';
 import { StepEntrenamientoComponent } from './PerceptronMulticapa/Componentes/entrenamiento/secciones/step-entrenamiento/step-entrenamiento.component';
+import { StepConfiguracionRedComponent } from './PerceptronMulticapa/Componentes/entrenamiento/secciones/step-configuracion-red/step-configuracion-red.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { StepEntrenamientoComponent } from './PerceptronMulticapa/Componentes/en
     SimulacionComponent,
     StepEntradasComponent,
     StepPesosYUmbralesComponent,
-    StepEntrenamientoComponent
+    StepEntrenamientoComponent,
+    StepConfiguracionRedComponent
   ],
   imports: [
     BrowserModule,

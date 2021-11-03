@@ -30,7 +30,6 @@ export class StepEntradasComponent implements OnInit, AfterViewInit {
   @Output() updateParametrosEntrada = new EventEmitter<ParametrosEntrada>();
   @Output() reloadParamsAndConfig = new EventEmitter<unknown>();
   @Output() reloadTraining = new EventEmitter<unknown>();
-
   constructor(private builder: FormBuilder,
     private getterEntradas: GetterEntradasService,
     private parametrosEntrenamientoService: ParametrosEntrenamientoService,

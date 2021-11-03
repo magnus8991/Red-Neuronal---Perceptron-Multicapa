@@ -7,6 +7,7 @@ import { ParametrosEntrada } from '../../Modelos/parametrosEntrada';
 import { MatrizPesosSinapticos } from '../../Modelos/matrizPesosSinapticos';
 import { ToastrService } from 'ngx-toastr';
 import { Umbrales } from '../../Modelos/umbrales';
+import {StepConfiguracionRedComponent} from './secciones/step-configuracion-red/step-configuracion-red.component';
 
 @Component({
   selector: 'app-entrenamiento',
@@ -15,6 +16,7 @@ import { Umbrales } from '../../Modelos/umbrales';
 })
 export class EntrenamientoComponent implements OnInit {
   @ViewChild(StepEntradasComponent) childStepEntradas;
+  @ViewChild(StepConfiguracionRedComponent) childStepConfiguracionRed;
   @ViewChild(StepPesosYUmbralesComponent) childStepPesos;
   @ViewChild(StepEntrenamientoComponent) childStepEntrenamiento;
 
